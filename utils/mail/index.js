@@ -39,7 +39,7 @@ exports = module.exports = {
     var template = Handlebars.compile(source);
 
     const options = {
-      from: `${process.env.APP_NAME} <${process.env.SMTP_EMAIL}>`,
+      from: `${process.env.SENDER_NAME} <${process.env.SENDER_EMAIL}>`,
       to: receiverEmail,
       subject,
       html: template(templateLocals), // Process template with locals - {passwordResetAddress}
