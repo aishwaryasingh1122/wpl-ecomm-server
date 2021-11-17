@@ -12,9 +12,6 @@ exports = module.exports = (app) => {
   });
 
   // Unverified Requests
-  app.post("/api/admin/register", authService.adminRegister);
-  app.post("/api/admin/login", authService.adminLogin);
-
   app.post("/api/user/register", authService.registerUser);
   app.post("/api/user/login", authService.loginUser);
 
