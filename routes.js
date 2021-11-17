@@ -32,4 +32,8 @@ exports = module.exports = (app) => {
     "/api/account/admin/assign-role/:userId/:role",
     usersService.assignUserRole
   );
+  app.put(
+    "/api/account/admin/toggle-account/:userId",
+    usersService.toggleUserActive
+  );
 };

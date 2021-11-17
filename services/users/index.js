@@ -19,18 +19,51 @@ exports = module.exports = {
       { $set: { role: roleToAssign } }
     ).exec((err, docs) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           msg: "Failed to assign user role. Try again!",
         });
       }
 
       if (!docs || !docs.modifiedCount) {
-        res.status(400).json({
+        return res.status(400).json({
           msg: "Failed to assign user role. Try again!",
         });
       }
 
       res.status(200).json();
+    });
+  },
+  toggleUserActive: (req, res) => {
+    const userId = req.params.userId;
+    req.app.db.models.User.findOne({ _id: userId }).exec((err, user) => {
+      if (err) {
+        return res.status(400).json({
+          msg: "Failed to update user account status.",
+        });
+      }
+
+      if (!user) {
+        return res.status(400).json({
+          msg: "User Id invalid.",
+        });
+      }
+
+      user.isActive = !user.isActive;
+      user.save((error, updatedUser) => {
+        if (error) {
+          return res.status(400).json({
+            msg: "Failed to update user account status.",
+          });
+        }
+
+        if (!updatedUser) {
+          return res.status(400).json({
+            msg: "Failed to update user account status. Try again!",
+          });
+        }
+
+        res.status(200).json();
+      });
     });
   },
 };
