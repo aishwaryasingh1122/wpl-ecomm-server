@@ -326,13 +326,14 @@ let authService = {
         },
       }
     ).exec((err, docs) => {
+      console.log("Verification res", docs);
       if (err) {
         return res.status(400).json({
           msg: "Failed to verify account. Try again!",
         });
       }
 
-      if (!docs || !docs.nVerified) {
+      if (!docs || !docs.modifiedCount) {
         return res.status(400).json({
           msg: "Failed to verify account. Try again!",
         });
