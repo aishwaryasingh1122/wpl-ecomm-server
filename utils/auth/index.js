@@ -60,4 +60,13 @@ module.exports = {
         msg: "Authentication required",
       });
   },
+  authorize: (req, res, next) => {
+    if (req.user.role < 1) {
+      res.status(401).json({
+        msg: "Inadequate authorization.",
+      });
+    } else {
+      next();
+    }
+  },
 };

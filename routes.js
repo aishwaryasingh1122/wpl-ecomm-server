@@ -1,5 +1,6 @@
 const authService = require("./services/auth");
 const authUtils = require("./utils/auth");
+const usersService = require("./services/users");
 
 exports = module.exports = (app) => {
   //  Verify CORS requests for browser
@@ -14,13 +15,17 @@ exports = module.exports = (app) => {
   // Unverified Requests
   app.post("/api/user/register", authService.registerUser);
   app.post("/api/user/login", authService.loginUser);
-
   app.get("/api/user/verify/:id", authService.verifyAccount);
 
-  // Authorized Requests
+  // Authentication and authorization middleware
   app.all("/api/account/*", authUtils.authenticate);
+  app.all("/api/account/admin/*", authUtils.authorize);
 
+  // Requests valid for all logged-in users
   app.get("/api/account/user-session", (req, res) =>
     authUtils.authenticate(req, res)
   );
+
+  // Requests valid for logged-in users with Admin or stronger roles
+  app.get("/api/account/admin/users", usersService.getAllUsers);
 };
