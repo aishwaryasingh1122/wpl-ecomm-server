@@ -28,4 +28,8 @@ exports = module.exports = (app) => {
 
   // Requests valid for logged-in users with Admin or stronger roles
   app.get("/api/account/admin/users", usersService.getAllUsers);
+  app.put(
+    "/api/account/admin/assign-role/:userId/:role",
+    usersService.assignUserRole
+  );
 };
