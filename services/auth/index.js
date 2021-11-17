@@ -85,23 +85,26 @@ let authService = {
         .populate("password", "passwordHash")
         .exec((err, user) => {
           if (err) {
-            console.log("Find user err: ", err);
             return res.status(401).json({
-              msg: "Login Failed. Email or password is invalid.",
+              msg: "Email or password is invalid.",
             });
           }
 
           if (!user) {
-            console.log("Find user: ", user);
             return res.status(401).json({
-              msg: "Login Failed. Email or password is invalid.",
+              msg: "Email or password is invalid.",
             });
           }
 
           if (!user.isActive) {
-            console.log("Find user: ", user);
             return res.status(401).json({
-              msg: "Login Failed. Email or password is invalid or your account has been deactivated.",
+              msg: "Email or password is invalid or your account has been deactivated.",
+            });
+          }
+
+          if (!user.isVerified) {
+            return res.status(401).json({
+              msg: "Account verification pending.",
             });
           }
 
