@@ -289,7 +289,7 @@ let authService = {
       const templateLocals = {
         username: userData.user.firstName,
         appName: process.env.APP_NAME,
-        verificationLink: `http://${process.env.APP_HOST}:${process.env.APP_PORT}/api/user/verify/${userData.user._id}`,
+        verificationLink: `${process.env.STORE_APP_URL}/verify-account/${userData.user._id}`,
       };
       mailUtils
         .sendMail(
