@@ -1,6 +1,7 @@
 const authService = require("./services/auth");
 const authUtils = require("./utils/auth");
 const usersService = require("./services/users");
+const productCategoryService = require("./services/product-category");
 
 exports = module.exports = (app) => {
   //  Verify CORS requests for browser
@@ -35,5 +36,17 @@ exports = module.exports = (app) => {
   app.put(
     "/api/account/admin/toggle-account/:userId",
     usersService.toggleUserActive
+  );
+  app.post(
+    "/api/account/admin/product-category",
+    productCategoryService.addCategory
+  );
+  app.get(
+    "/api/account/admin/product-category",
+    productCategoryService.fetchCategories
+  );
+  app.delete(
+    "/api/account/admin/product-category/:categoryId",
+    productCategoryService.removeCategory
   );
 };
