@@ -156,8 +156,10 @@ exports = module.exports = {
     req.app.db.models.Products.updateOne(
       { _id: productId },
       { $set: paramsToUpdate },
-      { new: true },
-      (err, updatedProduct) => {
+      { new: true }
+    )
+      .populate("category")
+      .exec((err, updatedProduct) => {
         if (err) {
           return res.status(400).json({
             msg: "Failed to update product.",
@@ -171,7 +173,6 @@ exports = module.exports = {
         }
 
         res.status(200).json();
-      }
-    );
+      });
   },
 };
