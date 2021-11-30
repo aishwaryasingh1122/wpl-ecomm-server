@@ -96,15 +96,17 @@ exports = module.exports = {
     workflow.emit("validateData");
   },
   getProducts: (req, res) => {
-    req.app.db.models.Products.find({}, (err, products) => {
-      if (err) {
-        return res.status(400).json({
-          msg: "Failed to get products. Try again",
-        });
-      }
+    req.app.db.models.Products.find({})
+      .populate({ path: "category", select: "title" })
+      .exec((err, products) => {
+        if (err) {
+          return res.status(400).json({
+            msg: "Failed to get products. Try again",
+          });
+        }
 
-      return res.status(200).json(products);
-    });
+        return res.status(200).json(products);
+      });
   },
   toggleProductAvailability: (req, res) => {
     const productId = req.params.productId;
@@ -157,22 +159,20 @@ exports = module.exports = {
       { _id: productId },
       { $set: paramsToUpdate },
       { new: true }
-    )
-      .populate("category")
-      .exec((err, updatedProduct) => {
-        if (err) {
-          return res.status(400).json({
-            msg: "Failed to update product.",
-          });
-        }
+    ).exec((err, updatedProduct) => {
+      if (err) {
+        return res.status(400).json({
+          msg: "Failed to update product.",
+        });
+      }
 
-        if (!updatedProduct) {
-          return res.status(400).json({
-            msg: "Failed to update product. Try again!",
-          });
-        }
+      if (!updatedProduct) {
+        return res.status(400).json({
+          msg: "Failed to update product. Try again!",
+        });
+      }
 
-        res.status(200).json();
-      });
+      res.status(200).json();
+    });
   },
 };
