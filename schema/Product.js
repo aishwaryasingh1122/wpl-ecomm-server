@@ -28,6 +28,10 @@ exports = module.exports = function (app, mongoose) {
       bufferQuantity: {
         type: Number,
       },
+      isDeleted: {
+        type: Boolean,
+        default: false,
+      },
     },
     {
       timestamps: {

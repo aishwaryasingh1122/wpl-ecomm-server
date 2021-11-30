@@ -18,6 +18,7 @@ exports = module.exports = (app) => {
   app.post("/api/user/register", authService.registerUser);
   app.post("/api/user/login", authService.loginUser);
   app.get("/api/user/verify/:id", authService.verifyAccount);
+  app.get("/api/products", productsService.getProducts);
 
   // Authentication and authorization middleware
   app.all("/api/account/*", authUtils.authenticate);
@@ -57,4 +58,12 @@ exports = module.exports = (app) => {
 
   // Product Management APIs
   app.post("/api/account/admin/product", productsService.addProduct);
+  app.put(
+    "/api/account/admin/product/toggle-availability/:productId",
+    productsService.toggleProductAvailability
+  );
+  app.put(
+    "/api/account/admin/product/update-quantity/:productId",
+    productsService.updateQuantity
+  );
 };
