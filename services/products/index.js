@@ -1,4 +1,4 @@
-const fileUploadUtils = require("utils/file-storage");
+const fileUploadUtils = require("../../utils/file-storage");
 
 exports = module.exports = {
   addProduct: (req, res) => {
@@ -146,18 +146,19 @@ exports = module.exports = {
     const paramsToUpdate = {};
 
     if (req.body.quantity) {
-      paramsToUpdate.quantity = quantity;
+      paramsToUpdate.quantity = req.body.quantity;
     }
 
     if (req.body.bufferQuantity) {
-      paramsToUpdate.bufferQuantity = bufferQuantity;
+      paramsToUpdate.bufferQuantity = req.body.bufferQuantity;
     }
 
     req.app.db.models.Products.updateOne(
       { _id: productId },
       { $set: paramsToUpdate },
+      { new: true },
       (err, updatedProduct) => {
-        if (error) {
+        if (err) {
           return res.status(400).json({
             msg: "Failed to update product.",
           });
@@ -169,7 +170,7 @@ exports = module.exports = {
           });
         }
 
-        res.status(200).json(updatedProduct);
+        res.status(200).json();
       }
     );
   },
