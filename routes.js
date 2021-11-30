@@ -2,6 +2,7 @@ const authService = require("./services/auth");
 const authUtils = require("./utils/auth");
 const usersService = require("./services/users");
 const productCategoryService = require("./services/product-category");
+const productsService = require("./services/products");
 
 exports = module.exports = (app) => {
   //  Verify CORS requests for browser
@@ -28,6 +29,8 @@ exports = module.exports = (app) => {
   );
 
   // Requests valid for logged-in users with Admin or stronger roles
+
+  // User Management APIs
   app.get("/api/account/admin/users", usersService.getAllUsers);
   app.put(
     "/api/account/admin/assign-role/:userId/:role",
@@ -37,6 +40,8 @@ exports = module.exports = (app) => {
     "/api/account/admin/toggle-account/:userId",
     usersService.toggleUserActive
   );
+
+  // Product Category Management APIs
   app.post(
     "/api/account/admin/product-category",
     productCategoryService.addCategory
@@ -49,4 +54,7 @@ exports = module.exports = (app) => {
     "/api/account/admin/product-category/:categoryId",
     productCategoryService.removeCategory
   );
+
+  // Product Management APIs
+  app.post("/api/account/admin/product", productsService.addProduct);
 };

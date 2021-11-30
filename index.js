@@ -3,7 +3,8 @@ const express = require("express"),
   logger = require("morgan"),
   cookieParser = require("cookie-parser"),
   mongoose = require("mongoose"),
-  bodyParser = require("body-parser");
+  bodyParser = require("body-parser"),
+  firebaseAdmin = require("firebase-admin");
 
 const app = express();
 
@@ -50,6 +51,12 @@ app.db.on("error", console.error.bind(console, "mongoose connection error: "));
 app.db.once("open", () => {
   //and... we have a data store
   console.log("DB connection successful");
+});
+
+// initialize firebase admin
+let serviceAccount = require(config.GOOGLE_APPLICATION_CREDENTIALS);
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
 });
 
 // Import mongoose models

@@ -5,4 +5,6 @@ module.exports = {
       .replace("<password>", process.env.MONGO_PASSWORD)
       .replace("<db_name>", process.env.MONGO_DB_NAME),
   },
+  GOOGLE_APPLICATION_CREDENTIALS:
+    process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS,
 };
