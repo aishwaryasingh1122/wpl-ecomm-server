@@ -33,6 +33,8 @@ exports = module.exports = (app) => {
 
   //Cart Management APIs
   app.get("/api/account/cart", cartService.findByUserId);
+  app.delete("/api/account/cart", cartService.clearCartByUserId);
+  app.post("/api/account/cart", cartService.setItemToCart);
 
   // Requests valid for logged-in users with Admin or stronger roles
 

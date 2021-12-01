@@ -341,7 +341,10 @@ let authService = {
           msg: "Failed to verify account. Try again!",
         });
       }
-      return res.status(200).json();
+      res.status(200).json();
+
+      // Initialize cart for valid users
+      req.app.db.models.Carts.create({ userId: id });
     });
   },
 };
