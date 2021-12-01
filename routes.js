@@ -3,6 +3,7 @@ const authUtils = require("./utils/auth");
 const usersService = require("./services/users");
 const productCategoryService = require("./services/product-category");
 const productsService = require("./services/products");
+const cartService = require("./services/cart");
 
 exports = module.exports = (app) => {
   //  Verify CORS requests for browser
@@ -29,6 +30,9 @@ exports = module.exports = (app) => {
   app.get("/api/account/user-session", (req, res) =>
     authUtils.authenticate(req, res)
   );
+
+  //Cart Management APIs
+  app.get("/api/account/cart", cartService.findByUserId);
 
   // Requests valid for logged-in users with Admin or stronger roles
 
