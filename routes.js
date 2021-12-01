@@ -19,6 +19,7 @@ exports = module.exports = (app) => {
   app.post("/api/user/login", authService.loginUser);
   app.get("/api/user/verify/:id", authService.verifyAccount);
   app.get("/api/products", productsService.getProducts);
+  app.get("/api/product-category", productCategoryService.fetchCategories);
 
   // Authentication and authorization middleware
   app.all("/api/account/*", authUtils.authenticate);
@@ -47,10 +48,7 @@ exports = module.exports = (app) => {
     "/api/account/admin/product-category",
     productCategoryService.addCategory
   );
-  app.get(
-    "/api/account/admin/product-category",
-    productCategoryService.fetchCategories
-  );
+
   app.delete(
     "/api/account/admin/product-category/:categoryId",
     productCategoryService.removeCategory
