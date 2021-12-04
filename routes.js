@@ -44,7 +44,10 @@ exports = module.exports = (app) => {
     "/api/account/addresses/:addressId",
     addressesService.removeUserAddress
   );
-  app.put("/api/account/addresses/", addressesService.editUserAddress);
+  app.put(
+    "/api/account/addresses/:addressId",
+    addressesService.editUserAddress
+  );
 
   // Requests valid for logged-in users with Admin or stronger roles
 
