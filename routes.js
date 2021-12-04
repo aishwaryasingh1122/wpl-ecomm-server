@@ -4,6 +4,7 @@ const usersService = require("./services/users");
 const productCategoryService = require("./services/product-category");
 const productsService = require("./services/products");
 const cartService = require("./services/cart");
+const addressesService = require("./services/addresses");
 
 exports = module.exports = (app) => {
   //  Verify CORS requests for browser
@@ -35,6 +36,15 @@ exports = module.exports = (app) => {
   app.get("/api/account/cart", cartService.findByUserId);
   app.delete("/api/account/cart", cartService.clearCartByUserId);
   app.post("/api/account/cart", cartService.setItemToCart);
+
+  // Addresses Management APIs
+  app.get("/api/account/addresses", addressesService.getAddressesForUser);
+  app.post("/api/account/addresses", addressesService.addNewAddressForUser);
+  app.delete(
+    "/api/account/addresses/:addressId",
+    addressesService.removeUserAddress
+  );
+  app.put("/api/account/addresses/", addressesService.editUserAddress);
 
   // Requests valid for logged-in users with Admin or stronger roles
 
