@@ -1,6 +1,14 @@
 const cartUtils = require("../../utils/cart");
 const mailUtils = require("../../utils/mail");
 
+const permittedOrderStatuses = [
+  "CANCELLED",
+  "NEW",
+  "PROCESSING",
+  "DISPATCHED",
+  "COMPLETED",
+];
+
 exports = module.exports = {
   getAllOrders: (req, res) => {
     req.app.db.models
@@ -126,5 +134,33 @@ exports = module.exports = {
     });
 
     workflow.emit("getCartForUser");
+  },
+  updateOrderStatus: (req, res) => {
+    const orderId = req.params.orderId;
+    const newStatus = req.params.status;
+
+    if (
+      !orderId ||
+      !newStatus ||
+      permittedOrderStatuses.indexOf(newStatus.toUpperCase() == -1)
+    ) {
+      return res.status(400).json({
+        msg: "Failed to update order status. OrderId and status required or status maybe invalid",
+      });
+    }
+
+    req.app.db.models.Orders.findOneAndUpdate(
+      { _id: orderId },
+      { $set: { status: newStatus.toUpperCase() } },
+      (err) => {
+        if (err) {
+          return res.status(400).json({
+            msg: "Failed to update order status.",
+          });
+        }
+
+        return res.status(200).json();
+      }
+    );
   },
 };

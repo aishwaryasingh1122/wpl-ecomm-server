@@ -91,4 +91,8 @@ exports = module.exports = (app) => {
 
   // Order Management APIs
   app.get("/api/account/admin/orders", ordersService.getAllOrders);
+  app.put(
+    "/api/account/admin/orders/update-status/:orderId/:status",
+    ordersService.updateOrderStatus
+  );
 };
