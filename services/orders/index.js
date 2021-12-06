@@ -115,6 +115,10 @@ exports = module.exports = {
     workflow.on("sendConfirmationMail", (orderId) => {
       const subject = `${process.env.APP_NAME} - Order Received!`;
 
+      console.log(
+        "Order details URL",
+        `${process.env.STORE_APP_URL}/orders/details/${orderId}`
+      );
       const templateLocals = {
         username: req.user.firstName,
         appName: process.env.APP_NAME,
@@ -139,7 +143,7 @@ exports = module.exports = {
     if (
       !orderId ||
       !newStatus ||
-      permittedOrderStatuses.indexOf(newStatus.toUpperCase() == -1)
+      permittedOrderStatuses.indexOf(newStatus.toUpperCase()) == -1
     ) {
       return res.status(400).json({
         msg: "Failed to update order status. OrderId and status required or status maybe invalid",

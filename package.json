@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Nodejs application server starter template",
   "main": "app.js",
+  "documentation": "https://documenter.getpostman.com/view/1534182/UVJiftQs",
   "scripts": {
     "start": "nodemon index"
   },
