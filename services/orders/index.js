@@ -122,7 +122,7 @@ exports = module.exports = {
       const templateLocals = {
         username: req.user.firstName,
         appName: process.env.APP_NAME,
-        verificationLink: `${process.env.STORE_APP_URL}/orders/details/${orderId}`,
+        orderDetailsLink: `${process.env.STORE_APP_URL}/orders/details/${orderId}`,
       };
       mailUtils
         .sendMail(req.user.email, subject, "ORDER_CONFIRMATION", templateLocals)
