@@ -11,11 +11,9 @@ const permittedOrderStatuses = [
 
 exports = module.exports = {
   getAllOrders: (req, res) => {
-    req.app.db.models
-      .Orders({})
+    req.app.db.models.Orders.find({})
       .populate("deliveryAddress")
-      .populate("user")
-      .populate({ path: "productData.products" })
+      .populate({ path: "productData.product" })
       .exec((err, orders) => {
         if (err) {
           return res.status(400).json({
@@ -28,10 +26,9 @@ exports = module.exports = {
   },
   getOrdersForUser: (req, res) => {
     const userId = req.user._id;
-    req.app.db.models
-      .Orders({ user: userId })
+    req.app.db.models.Orders.find({ user: userId })
+      .populate({ path: "productData.product" })
       .populate("deliveryAddress")
-      .populate({ path: "productData.products" })
       .exec((err, orders) => {
         if (err) {
           return res.status(400).json({
