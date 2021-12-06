@@ -5,6 +5,7 @@ const productCategoryService = require("./services/product-category");
 const productsService = require("./services/products");
 const cartService = require("./services/cart");
 const addressesService = require("./services/addresses");
+const ordersService = require("./services/orders");
 
 exports = module.exports = (app) => {
   //  Verify CORS requests for browser
@@ -49,6 +50,10 @@ exports = module.exports = (app) => {
     addressesService.editUserAddress
   );
 
+  // Orders APIs
+  app.get("/api/account/orders", ordersService.getOrdersForUser);
+  app.post("/api/account/orders", ordersService.createOrder);
+
   // Requests valid for logged-in users with Admin or stronger roles
 
   // User Management APIs
@@ -83,4 +88,7 @@ exports = module.exports = (app) => {
     "/api/account/admin/product/update-quantity/:productId",
     productsService.updateQuantity
   );
+
+  // Order Management APIs
+  app.get("/api/account/admin/orders", ordersService.getAllOrders);
 };

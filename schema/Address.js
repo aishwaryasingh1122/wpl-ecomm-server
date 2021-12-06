@@ -1,7 +1,7 @@
 "use strict";
 
 exports = module.exports = function (app, mongoose) {
-  let AddresSchema = new mongoose.Schema(
+  let AddressSchema = new mongoose.Schema(
     {
       name: {
         type: String,
@@ -45,5 +45,5 @@ exports = module.exports = function (app, mongoose) {
     }
   );
 
-  app.db.model("Addresses", AddresSchema);
+  app.db.model("Addresses", AddressSchema);
 };

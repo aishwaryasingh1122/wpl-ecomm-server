@@ -7,4 +7,5 @@ exports = module.exports = (app, mongoose) => {
   require("./schema/Product")(app, mongoose);
   require("./schema/Cart")(app, mongoose);
   require("./schema/Address")(app, mongoose);
+  require("./schema/Order")(app, mongoose);
 };
