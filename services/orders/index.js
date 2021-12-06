@@ -1,4 +1,5 @@
 const cartUtils = require("../../utils/cart");
+const mailUtils = require("../../utils/mail");
 
 exports = module.exports = {
   getAllOrders: (req, res) => {
@@ -88,6 +89,7 @@ exports = module.exports = {
             msg: "Failed to create order.",
           });
         }
+        workflow.emit("sendConfirmationMail", newOrder._id);
         res.status(200).json(newOrder);
         workflow.emit("clearCart");
       });
@@ -103,6 +105,24 @@ exports = module.exports = {
           }
         }
       );
+    });
+
+    workflow.on("sendConfirmationMail", (orderId) => {
+      const subject = `${process.env.APP_NAME} - Order Received!`;
+
+      const templateLocals = {
+        username: req.user.firstName,
+        appName: process.env.APP_NAME,
+        verificationLink: `${process.env.STORE_APP_URL}/orders/details/${orderId}`,
+      };
+      mailUtils
+        .sendMail(req.user.email, subject, "ORDER_CONFIRMATION", templateLocals)
+        .then(() => {
+          res.status(200).json();
+        })
+        .catch((err) => {
+          console.log("Sendmail err", err);
+        });
     });
 
     workflow.emit("getCartForUser");

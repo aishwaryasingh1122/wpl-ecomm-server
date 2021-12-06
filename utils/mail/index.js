@@ -5,6 +5,7 @@ const fs = require("fs"),
 
 const emailTemplates = {
   VERIFY_ACCOUNT: "verify-account.hbs",
+  ORDER_CONFIRMATION: "order-confirmation.hbs",
 };
 
 const transporterConfig = {
