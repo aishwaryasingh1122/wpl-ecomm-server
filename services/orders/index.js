@@ -10,6 +10,21 @@ const permittedOrderStatuses = [
 ];
 
 exports = module.exports = {
+  getOrderById: (req, res) => {
+    const orderId = req.params.orderId;
+    req.app.db.models.Orders.findOne({ _id: orderId })
+      .populate("deliveryAddress")
+      .populate({ path: "productData.product" })
+      .exec((err, order) => {
+        if (err || !order) {
+          return res.status(400).json({
+            msg: "Failed to fetch order details. Invalid Order ID",
+          });
+        }
+
+        return res.status(200).json(order);
+      });
+  },
   getAllOrders: (req, res) => {
     req.app.db.models.Orders.find({})
       .populate("deliveryAddress")

@@ -51,6 +51,7 @@ exports = module.exports = (app) => {
   );
 
   // Orders APIs
+  app.get("/api/account/orders/:orderId", ordersService.getOrderById);
   app.get("/api/account/orders", ordersService.getOrdersForUser);
   app.post("/api/account/orders", ordersService.createOrder);
 
