@@ -1,4 +1,5 @@
 const fileUploadUtils = require("../../utils/file-storage");
+const mongoose = require("mongoose");
 
 exports = module.exports = {
   getProductById: (req, res) => {
@@ -283,7 +284,7 @@ exports = module.exports = {
       const productId = productData._id;
       delete productData._id;
       req.app.db.models.Products.updateOne(
-        { _id: productId },
+        { _id: mongoose.Types.ObjectId(productId) },
         { $set: { productData } },
         (err) => {
           if (err) {
