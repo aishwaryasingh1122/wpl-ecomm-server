@@ -252,7 +252,7 @@ exports = module.exports = {
         });
       }
 
-      if (req.body.imgData & req.body.imgData.trim()) {
+      if (req.body.imgData && req.body.imgData.trim()) {
         workflow.emit("addImageToBucket", req.body);
       } else {
         workflow.emit("updateProductInDB", req.body);
