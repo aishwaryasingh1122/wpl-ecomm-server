@@ -22,6 +22,7 @@ exports = module.exports = (app) => {
   app.post("/api/user/login", authService.loginUser);
   app.get("/api/user/verify/:id", authService.verifyAccount);
   app.get("/api/products", productsService.getProducts);
+  app.get("/api/products/:productId", productsService.getProductById);
   app.get("/api/product-category", productCategoryService.fetchCategories);
 
   // Authentication and authorization middleware
@@ -81,6 +82,7 @@ exports = module.exports = (app) => {
 
   // Product Management APIs
   app.post("/api/account/admin/product", productsService.addProduct);
+  app.put("/api/account/admin/product", productsService.editProduct);
   app.put(
     "/api/account/admin/product/toggle-availability/:productId",
     productsService.toggleProductAvailability
