@@ -285,7 +285,7 @@ exports = module.exports = {
       delete productData._id;
       req.app.db.models.Products.updateOne(
         { _id: mongoose.Types.ObjectId(productId) },
-        { $set: { productData } },
+        productData,
         (err) => {
           if (err) {
             return res.status(400).json({

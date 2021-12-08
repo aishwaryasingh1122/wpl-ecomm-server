@@ -114,7 +114,7 @@ exports = module.exports = {
     const addressId = req.params.addressId;
     req.app.db.models.Addresses.updateOne(
       { _id: addressId },
-      { $set: { addressFieldsToUpdate } },
+      addressFieldsToUpdate,
       (err, updatedAddress) => {
         if (err || !updatedAddress) {
           return res.status(400).json({
